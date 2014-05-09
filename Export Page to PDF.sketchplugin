@@ -1,0 +1,6 @@
+// This plugin exports the current page to your Desktop,
+// using the page name as the filename for the PDF
+
+var n = [[doc currentPage] name]
+[doc saveArtboardOrSlice:[[doc currentPage] contentBounds] toFile:"~/Desktop/"+n+".pdf"]
+[doc showMessage:"Page exported to Desktop/"+n+".pdf"]
