@@ -1,0 +1,12 @@
+// Clear All Slices in Document
+var p = [doc pages]
+for (var i = 0; i < [p count]; i++) {
+  var current_page = [p objectAtIndex:i]
+  var exportable_layers = [current_page exportableLayers]
+  for (var l = 0; l < [exportable_layers count]; l++) {
+    var slice_or_layer = [exportable_layers objectAtIndex:l]
+    if ([slice_or_layer isMemberOfClass:MSSliceLayer]) {
+      [slice_or_layer removeFromParent]
+    }
+  }
+}
