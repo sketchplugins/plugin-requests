@@ -1,0 +1,6 @@
+// Show All Layers
+var all_layers = [[doc currentPage] layers]
+for (var i = 0; i < [all_layers count]; i++) {
+  var current_layer = [all_layers objectAtIndex:i]
+  [current_layer setIsVisible:true]
+}
