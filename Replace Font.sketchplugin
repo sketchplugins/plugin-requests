@@ -1,4 +1,6 @@
 // Change font
+// This plugin changes the font family of all text layers in the document
+
 var font_name = [doc askForUserInput:"Font name:" initialValue:"Arial"]
 
 function check_layer(layer){
