@@ -1,0 +1,12 @@
+// Toggle Text Width
+
+for(var i=0; i < [selection count]; i++){
+  var s = [selection objectAtIndex:i]
+  if([s className] == "MSTextLayer"){
+    var current_behaviour = [s textBehaviour]
+    log(!current_behaviour)
+    [s setTextBehaviour:!current_behaviour]
+    // [s setTextBehaviour:0] // BCTextBehaviourFlexibleWidth
+    // [s setTextBehaviour:1] // BCTextBehaviourFixedWidth
+  }
+}
