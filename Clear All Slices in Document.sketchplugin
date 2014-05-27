@@ -5,8 +5,17 @@ for (var i = 0; i < [p count]; i++) {
   var exportable_layers = [current_page exportableLayers]
   for (var l = 0; l < [exportable_layers count]; l++) {
     var slice_or_layer = [exportable_layers objectAtIndex:l]
+    log([slice_or_layer name])
     if ([slice_or_layer isMemberOfClass:MSSliceLayer]) {
       [slice_or_layer removeFromParent]
+    }
+    if ([slice_or_layer exportOptions]) {
+      var opts = [slice_or_layer exportOptions],
+          sizes = [opts sizes]
+      for(var i=0; i < [sizes count]; i++) {
+        var size = [sizes objectAtIndex:i]
+        [size remove]
+      }
     }
   }
 }
