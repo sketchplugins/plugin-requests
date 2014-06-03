@@ -1,0 +1,5 @@
+// Toggle ClickTrough
+for (var i=0; i < [selection count]; i++) {
+  var s = [selection objectAtIndex:i]
+  [s setHasClickThrough:![s hasClickThrough]]
+}
