@@ -1,0 +1,44 @@
+// Show stats for document
+
+// Pages
+var pages = [doc pages],
+    page_count = [pages count],
+    artboard_count = 0,
+    layer_count = 0
+
+// Artboards
+for (var i=0; i < [pages count]; i++) {
+  var page = [pages objectAtIndex:i]
+  var artboards = [page artboards]
+  artboard_count += [artboards count]
+  var all_items = [page children]
+  for (var j=0; j < [all_items count]; j++) {
+    var item = [all_items objectAtIndex:j]
+    log([item className])
+    if ([item className] != "MSPage" && [item className] != "MSArtboardGroup" && [item className] != "MSRectangleShape" && [item className] != "MSOvalShape" && [item className] != "MSStarShape" && [item className] != "MSPolygonShape" && [item className] != "MSTriangleShape" && [item className] != "MSShapePathLayer") {
+      log("Adding")
+      layer_count++
+    }
+  }
+}
+
+var msg = "Stats: " + page_count + " page"
+if (page_count > 1) {
+  msg += "s"
+}
+if (artboard_count > 0) {
+  msg += ", " + artboard_count + " artboard"
+  if (artboard_count > 1) {
+    msg += "s"
+  }
+}
+if (layer_count > 0) {
+  msg += ", " + layer_count + " layer"
+  if (layer_count > 1) {
+    msg += "s"
+  }
+}
+msg += "."
+
+log(msg)
+[doc showMessage:msg]
