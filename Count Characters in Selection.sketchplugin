@@ -2,7 +2,11 @@ var total_chars = 0
 
 for (var i=0; i < [selection length]; i++){
   var s = [selection objectAtIndex:i]
-  total_chars += [[s stringValue] length]
+  try {
+    total_chars += [[s stringValue] length]
+  } catch (e) {
+    log(e)
+  }
 }
 
 [doc showMessage:"" + total_chars + " characters in selected layer" + ([selection count] > 1 ? "s" : "")]
