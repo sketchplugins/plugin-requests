@@ -1,0 +1,29 @@
+// Change Selected Layers' Font Size (cmd shift t)
+// This plugin will change the font size of all the text layers in the selection.
+// If the selection is mixed (i.e: shapes and text layers) only text layers will be
+// affected, and the selection will be modified when running the command, so only
+// text layers will remain selected after running it.
+
+var textLayers = []
+
+for (var i=0; i < [selection count]; i++) {
+  var layer = [selection objectAtIndex:i]
+  if ([layer isKindOfClass:[MSTextLayer class]]) {
+    textLayers.push(layer)
+  }
+}
+
+if (textLayers.length == 0) {
+  [doc showMessage:"You need to select at least one text layer"]
+} else {
+  var size = [doc askForUserInput:"Font Size for selected layers?" initialValue:16]
+  for (var i=0; i < textLayers.length; i++) {
+    var textLayer = textLayers[i]
+    [textLayer setFontSize:size]
+  }
+  [[doc currentPage] deselectAllLayers]
+  for(var i=0; i < textLayers.length; i++){
+    var layer = textLayers[i]
+    [layer select:true byExpandingSelection:true]
+  }
+}
