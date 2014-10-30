@@ -1,5 +1,5 @@
-for (var i=0; i < [selected count]; i++) {
-  var s = [selected objectAtIndex:i]
+for (var i=0; i < [selection count]; i++) {
+  var s = [selection objectAtIndex:i]
   [[s frame] setConstrainProportions:![s constrainProportions]]
 }
 [doc reloadInspector]
