@@ -1,5 +1,7 @@
+// Toggles the currently selected item(s) 'Constrain Proportions' setting
 for (var i=0; i < [selection count]; i++) {
   var s = [selection objectAtIndex:i]
   [[s frame] setConstrainProportions:![s constrainProportions]]
 }
+// This is needed to update the inspector's icon
 [doc reloadInspector]
