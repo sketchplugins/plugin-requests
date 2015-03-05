@@ -1,0 +1,2 @@
+var n = [doc askForUserInput:"Page name:" initialValue:doc.currentPage().name()]
+doc.currentPage().setName(n)
