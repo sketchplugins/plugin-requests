@@ -1,0 +1,2 @@
+var doc = doc || context.document
+MSPDFBookExporter.exportPages([[doc currentPage]])
