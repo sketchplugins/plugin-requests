@@ -1,4 +1,6 @@
 // Fit to Width (cmd shift 1)
+// This plugin will zoom out to fit the canvas' contents in the window,
+// but maximizing the width only
 margin = 50
 view = [doc currentView]
 
@@ -12,11 +14,11 @@ layerRect =    [view totalRectForLayers:layers]
 ratio = window_width / window_height
 
 // Set rect height to new ratio
-layerRect.setHeight(layerRect.width() / ratio)
+layerRect.size.height = layerRect.size.width / ratio
 
-layerRect.setX(layerRect.x() - margin)
-layerRect.setY(layerRect.y() - margin)
-layerRect.setWidth(layerRect.width() + margin*2)
-layerRect.setHeight(layerRect.height() + margin*2)
+layerRect.origin.x -= margin
+layerRect.origin.y -= margin
+layerRect.size.width += margin*2
+layerRect.size.height += margin*2
 
 [view zoomToFitRect:layerRect]
