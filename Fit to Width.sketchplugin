@@ -1,0 +1,22 @@
+// Fit to Width (cmd shift 1)
+margin = 50
+view = [doc currentView]
+
+window_width  = view.frame().size.width
+window_height = view.frame().size.height
+
+layers =       doc.currentPage().containedLayers()
+layerRect =    [view totalRectForLayers:layers]
+
+// Calculate vertical ratio
+ratio = window_width / window_height
+
+// Set rect height to new ratio
+layerRect.setHeight(layerRect.width() / ratio)
+
+layerRect.setX(layerRect.x() - margin)
+layerRect.setY(layerRect.y() - margin)
+layerRect.setWidth(layerRect.width() + margin*2)
+layerRect.setHeight(layerRect.height() + margin*2)
+
+[view zoomToFitRect:layerRect]
