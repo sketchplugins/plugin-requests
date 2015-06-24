@@ -1,0 +1,55 @@
+// Add Slice Sizes for Selected Layer
+
+// Customize these with your desired formats & scales
+var export_data = [
+  {
+    "format": "png",
+    "scale": 1,
+    "suffix": ""
+  },
+  {
+    "format": "png",
+    "scale": 2,
+    "suffix": "@2x"
+  },
+  {
+    "format": "svg",
+    "scale": 1,
+    "suffix": ""
+  },
+  {
+    "format": "pdf",
+    "scale": 3,
+    "suffix": "-wireframe"
+  }
+]
+
+// Loop through selected layers:
+var original_selection = []
+for (var i=0; i < [selection count]; i++) {
+  var layer = [selection objectAtIndex:i],
+      export_options = [layer exportOptions],
+      export_sizes = [export_options sizes]
+
+  original_selection.push(layer)
+
+  // Clear all exportable sizes
+  while([export_sizes count] > 0) {
+    [[export_sizes firstObject] remove]
+  }
+
+  for (var s = 0; s < export_data.length; s++) {
+    var size_data = export_data[s]
+    var size = [[layer exportOptions] addExportSize]
+    [size setFormat:size_data.format]
+    [size setScale:size_data.scale]
+    [size setName:size_data.suffix]
+  }
+}
+
+// Restore original selection
+[[doc currentPage] deselectAllLayers]
+for (var j=0; j < original_selection.length; j++) {
+  var l = original_selection[j]
+  [l select:true byExpandingSelection:true]
+}
