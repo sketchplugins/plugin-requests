@@ -1,0 +1,55 @@
+// Reverse Layer Order
+
+var doc = context.document,
+    selection = context.selection;
+
+function reverseLayerOrder(layers) {
+  // Reverses the layer order
+  for (var i=0; i < [layers count]; i++) {
+    var first = [layers objectAtIndex:i]
+    var next = [layers objectAtIndex:([layers count] - 1)]
+    swapIndex(first, next)
+  }
+}
+
+function swapIndex(layer1, layer2) {
+  var a = layer1;
+  var b = layer2;
+
+  // check if both layers are in the same group
+  var parent_a = null;
+  var parent_b = null;
+
+  try {
+      parent_a = a.parentGroup();
+      parent_b = b.parentGroup();
+  } catch (error) {}
+
+  if (parent_a == parent_b) {
+
+      var parent = parent_a;
+
+      // deselect all layers
+      doc.currentPage().deselectAllLayers();
+
+      // select b
+      a.setIsSelected(true);
+
+      var steps = Math.abs(parent.indexOfLayer(b) - parent.indexOfLayer(a));
+
+      for (var i = 0; i < steps; i++) {
+        [NSApp sendAction:'moveForward:' to:nil from:doc];
+      }
+  } else {
+      doc.showMessage("Please select layers of the same group")
+  }
+}
+
+var originalSelection = selection
+reverseLayerOrder(selection)
+
+// Restore selection
+for (var j=0; j < [originalSelection count]; j++) {
+  var layer = [originalSelection objectAtIndex:j]
+  layer.setIsSelected(true)
+}
