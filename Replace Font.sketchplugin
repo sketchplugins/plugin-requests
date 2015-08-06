@@ -1,5 +1,5 @@
 // Change font
-// This plugin changes the font family of all text layers in the document
+// This plugin changes the font family of the selected text layers (or all the text layers in the document, if there's no selection)
 
 var doc = doc || context.document,
     selection = selection || context.selection
