@@ -1,0 +1,28 @@
+// Paste as new Artboard
+// Takes whatever is on the clipboard, pastes it, and makes a new Artboard around it
+
+var doc = context.document,
+    page = doc.currentPage(),
+    artboardName = "Pasted from Clipboard"
+
+// If you want to be asked for the artboard name before pasting it, uncomment the following line
+// artboardName = [doc askForUserInput:"New artboard name" initialValue:""]
+
+[NSApp sendAction:"paste:" to:nil from:doc]
+
+var pastedRect = sumOfRects(page.selectedLayers())
+
+var artboard = MSArtboardGroup.alloc().initWithFrame(pastedRect)
+artboard.name = artboardName
+page.addLayers([artboard])
+[page moveLayersToArtboards]
+[artboard select:true byExpandingSelection:false]
+
+function sumOfRects(layers){
+  var result = [[layers firstObject] rect];
+  var count = [layers count];
+  for (var i=1; i<count; i++) {
+    result = NSUnionRect(result, layers.objectAtIndex(i).rect())
+  }
+  return result
+}
