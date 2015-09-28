@@ -1,4 +1,4 @@
-// Fit to Current Artboard
+// Fit to Current Artboard (cmd shift 2)
 // This plugin will zoom out to fit the current artboard in the window,
 margin = 10
 view = context.document.currentView()
