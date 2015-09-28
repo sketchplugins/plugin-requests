@@ -1,0 +1,17 @@
+// Fit to Current Artboard
+// This plugin will zoom out to fit the current artboard in the window,
+margin = 10
+view = context.document.currentView()
+
+window_width  = view.frame().size.width
+window_height = view.frame().size.height
+
+layers =       context.document.currentPage().currentArtboard()
+layerRect =    [view totalRectForLayers:[layers]]
+
+layerRect.origin.x -= margin
+layerRect.origin.y -= margin
+layerRect.size.width += margin*2
+layerRect.size.height += margin*2
+
+[view zoomToFitRect:layerRect]
