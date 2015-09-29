@@ -1,0 +1,53 @@
+var doc = doc || context.document,
+    selection = selection || context.selection
+
+var font_name = [doc askForUserInput:"Font name:" initialValue:"OpenSans"]
+
+function check_layer(layer){
+  var klass = [layer className]
+  //log("Checking layer " + layer + " of klass: " + klass)
+  if (klass == "MSTextLayer") {
+    // This log here will show you all the fonts you use in your document
+    log("Found text layer w/font: " + [layer fontPostscriptName])
+    // You might want to change this check here to check if the fontPostscriptName starts with font_name, so you'll catch OpenSans-Bold too, for example
+	if ([layer fontPostscriptName] == font_name) {
+      log("  Selected!")
+      [layer select:true byExpandingSelection:true]
+    }
+  }
+  if ( klass == "MSPage" || klass == "MSLayerGroup" || klass == "MSArtboardGroup" ){
+    var sublayers = [layer layers]
+    //log("This is a group/artboard/page with " + [sublayers count] + " sublayers")
+    for(var i=0; i < [sublayers count]; i++) {
+      var sublayer = [sublayers objectAtIndex:i]
+      check_layer(sublayer);
+    }
+  }
+}
+
+log("################################################################")
+
+// Use selection, if any
+if(selection && [selection count]){
+  for (var i = 0; i < [selection count]; i++) {
+    check_layer([selection objectAtIndex:i])
+  }
+} else {
+  // Otherwise, loop trough pages, artboards & layers
+  var pages = [doc pages]
+  for (var i = 0; i < [pages count]; i++) {
+    var current_page = [pages objectAtIndex:i],
+        artboards = [current_page artboards]
+    [current_page deselectAllLayers]
+    if ([artboards count]) {
+      //log("Traversing artboards")
+      for (var i = 0; i < [artboards count]; i++) {
+        var artboard = [artboards objectAtIndex:i]
+        check_layer(artboard)
+      }
+    } else {
+      //log("Page has no artboards")
+      check_layer(current_page)
+    }
+  }
+}
