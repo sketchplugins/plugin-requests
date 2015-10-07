@@ -1,7 +1,7 @@
 var doc = doc || context.document,
     selection = selection || context.selection
 
-var font_name = [doc askForUserInput:"Font name:" initialValue:"OpenSans"]
+var font_name = [doc askForUserInput:"Font name starts with:" initialValue:"OpenSans"]
 
 function check_layer(layer){
   var klass = [layer className]
@@ -9,8 +9,8 @@ function check_layer(layer){
   if (klass == "MSTextLayer") {
     // This log here will show you all the fonts you use in your document
     log("Found text layer w/font: " + [layer fontPostscriptName])
-    // You might want to change this check here to check if the fontPostscriptName starts with font_name, so you'll catch OpenSans-Bold too, for example
-	if ([layer fontPostscriptName] == font_name) {
+    // This checks if the fontPostscriptName starts with font_name, so you'll catch OpenSans-Bold too, for example
+	if ([layer fontPostscriptName].lastIndexOf(font_name, 0) === 0) {
       log("  Selected!")
       [layer select:true byExpandingSelection:true]
     }
