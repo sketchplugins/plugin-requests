@@ -1,10 +1,10 @@
 // Hide Unselected Layers
-var s = selection
-
-var all_layers = [[doc currentPage] layers]
-for (var i = 0; i < [all_layers count]; i++) {
-  var current_layer = [all_layers objectAtIndex:i]
-  if(![selection containsObject:current_layer]){
-    [current_layer setIsVisible:false]
+var all_layers = context.document.currentPage().children()
+for (var i = 0; i < all_layers.count(); i++) {
+  var current_layer = all_layers.objectAtIndex(i)
+  if(!context.selection.containsObject(current_layer)){
+    if(current_layer.className() != "MSArtboardGroup"){
+      current_layer.setIsVisible(false)
+     }
   }
 }
