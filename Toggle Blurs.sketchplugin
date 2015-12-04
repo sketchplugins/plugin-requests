@@ -1,0 +1,30 @@
+// Toggle Blurs
+/*
+Background blurs are *really* CPU-intensive. But if you have no choice and need
+to use them on your designs, this Plugin will let you toggle them on and off
+to speed up rendering. You should toggle them off for regular work, and toggle
+them on for exporting.
+*/
+
+var doc = context.document,
+    command = context.command,
+    pages = doc.pages(),
+    pluginKey = "com.bomberstudios.toggleBlur"
+
+// Traverse all pages
+for (var i = 0; i < [pages count]; i++) {
+  var currentPage = [pages objectAtIndex:i]
+  var all_layers = [currentPage children]
+  for (var j = 0; j < [all_layers count]; j++) {
+    var current_layer = [all_layers objectAtIndex:j]
+    if(current_layer.style != undefined){
+      if ([command valueForKey:pluginKey onLayer:current_layer] == true) {
+        [command setValue:false forKey:pluginKey onLayer:current_layer]
+        current_layer.style().blur().setIsEnabled(false)
+      } else {
+        [command setValue:true forKey:pluginKey onLayer:current_layer]
+        current_layer.style().blur().setIsEnabled(false)
+      }
+    }
+  }
+}
