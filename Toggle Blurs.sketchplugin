@@ -2,7 +2,7 @@
 /*
 Background blurs are *really* CPU-intensive. But if you have no choice and need
 to use them on your designs, this Plugin will let you toggle them on and off
-to speed up rendering. You should toggle them off for regular work, and toggle
+to speed up rendering. You can toggle them off for regular work, and toggle
 them on for exporting.
 */
 
