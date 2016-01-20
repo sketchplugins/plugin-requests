@@ -1,17 +1,16 @@
 // Fit to Width (cmd shift 1)
 // This plugin will zoom out to fit the canvas' contents in the window,
 // but maximizing the width only
-margin = 50
-view = [doc currentView]
-
-window_width  = view.frame().size.width
-window_height = view.frame().size.height
-
-layers =       doc.currentPage().containedLayers()
-layerRect =    [view totalRectForLayers:layers]
+var doc = context.document,
+    margin = 50,
+    view = [doc currentView],
+    window_width  = view.frame().size.width,
+    window_height = view.frame().size.height,
+    layers = doc.currentPage().containedLayers(),
+    layerRect = [view totalRectForLayers:layers]
 
 // Calculate vertical ratio
-ratio = window_width / window_height
+var ratio = window_width / window_height
 
 // Set rect height to new ratio
 layerRect.size.height = layerRect.size.width / ratio
