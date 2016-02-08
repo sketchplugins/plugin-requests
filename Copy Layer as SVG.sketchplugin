@@ -23,7 +23,7 @@ function do_export(){
 }
 
 
-var sel = selection[0],
+var sel = context.selection[0],
     rect = [sel rectByAccountingForStyleSize:[[sel absoluteRect] rect]],
     tmp_path = "/tmp/com.bomberstudios.sketch-commands/",
     export_path;
