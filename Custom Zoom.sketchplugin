@@ -1,11 +1,11 @@
 // Set Custom Zoom Level
-(function() {
-  var zoom = [doc askForUserInput:"Enter zoom level" initialValue:200]
-  if (zoom) {
-    [doc setZoomValue:zoom/100]
-    // This is here to force a redraw of the canvas
-    var c = [doc currentPage]
-    [doc setCurrentPage:0]
-    [doc setCurrentPage:c]
-  }
-}())
+var doc = context.document,
+    zoom = [doc askForUserInput:"Enter zoom level" initialValue:200]
+
+if (zoom) {
+  [doc setZoomValue:zoom/100]
+  // This is here to force a redraw of the canvas
+  var c = [doc currentPage]
+  [doc setCurrentPage:0]
+  [doc setCurrentPage:c]
+}
