@@ -1,2 +1,8 @@
-var doc = doc || context.document
-MSPDFBookExporter.exportPages([[doc currentPage]])
+var doc = doc || context.document,
+    filename = "Untitled"
+
+if (doc.fileURL() != null) {
+  filename = doc.fileURL().path().lastPathComponent().stringByDeletingPathExtension()
+}
+
+MSPDFBookExporter.exportPages_defaultFilename_([doc.currentPage()], filename)
