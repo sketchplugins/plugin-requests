@@ -1,11 +1,12 @@
 // Remove Hidden Layers in Document
-for (var i=0; i < [[doc pages] count]; i++) {
-  var page = [[doc pages] objectAtIndex:i]
-  var layers = [page children]
-  for (var l=0; l < [layers count]; l++) {
-    var layer = [layers objectAtIndex:l]
-    if ([layer isVisible] == 0) {
-      [layer removeFromParent]
+var pages = context.document.pages()
+for (var i=0; i < pages.count(); i++) {
+  var page = pages.objectAtIndex(i)
+  var layers = page.children()
+  for (var l=0; l < layers.count(); l++) {
+    var layer = layers.objectAtIndex(l)
+    if (layer.isVisible() == 0) {
+      layer.removeFromParent()
     }
   }
 }
