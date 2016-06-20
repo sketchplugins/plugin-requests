@@ -8,14 +8,17 @@ var font_name = [doc askForUserInput:"Font name:" initialValue:"Arial"]
 
 function check_layer(layer){
   var klass = [layer className]
-  log("Checking layer " + layer + " of klass: " + klass)
+  // log("Checking layer " + layer + " of klass: " + klass)
   if (klass == "MSTextLayer") {
-    log("Found text layer!")
-    layer.setFontPostscriptName(font_name);
+    // log("Found text layer!")
+    var font = NSFont.fontWithName_size(font_name, layer.fontSize())
+    layer.setFont(font)
+    layer.syncTextStyleAttributes()
+    layer.adjustFrameToFit()
   }
-  if ( klass == "MSPage" || klass == "MSLayerGroup" || klass == "MSArtboardGroup" ){
+  if ( klass == "MSPage" || klass == "MSLayerGroup" || klass == "MSArtboardGroup" || klass == "MSSymbolMaster" || klass == "MSSymbolInstance"){
     var sublayers = [layer layers]
-    log("This is a group/artboard/page with " + [sublayers count] + " sublayers")
+    // log("This is a group/artboard/page with " + [sublayers count] + " sublayers")
     for(var i=0; i < [sublayers count]; i++) {
       var sublayer = [sublayers objectAtIndex:i]
       check_layer(sublayer);
@@ -45,6 +48,12 @@ if(selection && [selection count]){
     } else {
       log("Page has no artboards")
       check_layer(current_page)
+    }
+    // Also traverse layers not on an artboard:
+    var layers = current_page.layers()
+    for (var l=0; l < [layers count]; l++) {
+      var currentLayer = [layers objectAtIndex:l]
+      check_layer(currentLayer)
     }
   }
 }
