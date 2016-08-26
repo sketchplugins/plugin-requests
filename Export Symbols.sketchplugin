@@ -22,7 +22,7 @@ if(Object.keys(allSymbols).length == 0){
     var currentSymbol = allSymbols[currentID],
         symbolName = [currentSymbol name],
         exportFilename = document_path + "/" + symbolName + ".png",
-        slice = [[MSSliceMaker slicesFromExportableLayer:currentSymbol] firstObject]
+        slice = [[MSExportRequest exportRequestsFromExportableLayer:currentSymbol] firstObject]
 
     slice.page = [[doc currentPage] copyLightweight]
     slice.format = "png"
