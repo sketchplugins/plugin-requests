@@ -1,7 +1,7 @@
 // Add Slice Sizes for Selected Layer
 
 // Customize these with your desired formats & scales
-var export_data = [
+var export_presets = [
   {
     "format": "png",
     "scale": 1,
@@ -25,31 +25,33 @@ var export_data = [
 ]
 
 // Loop through selected layers:
+var selection = context.selection
 var original_selection = []
-for (var i=0; i < [selection count]; i++) {
-  var layer = [selection objectAtIndex:i],
-      export_options = [layer exportOptions],
-      export_sizes = [export_options sizes]
+
+for (var i=0; i < selection.count(); i++) {
+  var layer = selection.objectAtIndex(i),
+      export_options = layer.exportOptions(),
+      export_formats = export_options.exportFormats()
 
   original_selection.push(layer)
 
   // Clear all exportable sizes
-  while([export_sizes count] > 0) {
-    [[export_sizes firstObject] remove]
-  }
+  export_options.removeAllExportFormats()
 
-  for (var s = 0; s < export_data.length; s++) {
-    var size_data = export_data[s]
-    var size = [[layer exportOptions] addExportSize]
-    [size setFormat:size_data.format]
-    [size setScale:size_data.scale]
-    [size setName:size_data.suffix]
+  for (var s = 0; s < export_presets.length; s++) {
+    var preset_data = export_presets[s]
+    var format = layer.exportOptions().addExportFormat()
+    format.fileFormat = preset_data.format
+    format.scale = preset_data.scale
+    format.name = preset_data.suffix
   }
 }
 
 // Restore original selection
-[[doc currentPage] deselectAllLayers]
+context.document.currentPage().deselectAllLayers()
 for (var j=0; j < original_selection.length; j++) {
   var l = original_selection[j]
   [l select:true byExpandingSelection:true]
 }
+
+context.document.reloadInspector()
